@@ -2,6 +2,7 @@ const express = require("express")
 const inventoryRouter = express.Router()
 const Item = require("../models/inventory.js")
 
+//get request
 inventoryRouter.get("/", (req, res, next) => {
     Item.find((err, inventory) => {
         if (err) {
@@ -12,6 +13,7 @@ inventoryRouter.get("/", (req, res, next) => {
     })
 })
 
+//post new item
 inventoryRouter.post("/", (req, res, next) => {
     const newItem = new Item(req.body)
     newItem.save((err, savedItem) => {
@@ -23,6 +25,7 @@ inventoryRouter.post("/", (req, res, next) => {
     })
 })
 
+//delete item by id
 inventoryRouter.delete("/:itemId", (req, res, next) => {
     Item.findOneAndDelete({ _id: req.params.itemId }, (err, deletedItem) => {
         if(err) {
@@ -33,6 +36,7 @@ inventoryRouter.delete("/:itemId", (req, res, next) => {
     })
 })
 
+//update item by id
 inventoryRouter.put("/:itemId", (req, res, next) => {
     Item.findOneAndUpdate( 
         { _id: req.params.itemId },
